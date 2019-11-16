@@ -28,9 +28,15 @@ namespace chess_console {
             printCapturedPieces( match );
             Console.WriteLine();
             Console.WriteLine( "Shift: " + match.Shift);
-            Console.WriteLine( "Waiting player " + match.CurrentPlayer );
+
             if ( match.InCheck ) {
-                Console.WriteLine( "Check!" );
+                Console.WriteLine( "Waiting player " + match.CurrentPlayer );
+                if ( match.InCheck ) {
+                    Console.WriteLine( "Check!" );
+                }
+            } else {
+                Console.WriteLine( "CHECKMATE!" );
+                Console.WriteLine( "Winner player " + match.CurrentPlayer );
             }
         }
 
