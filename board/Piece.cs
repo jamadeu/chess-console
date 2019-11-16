@@ -14,6 +14,9 @@ namespace board {
         public void incrementMovementsCount () {
             movementsCount++;
         }
+        public void decrementMovementsCount() {
+            movementsCount--;
+        }
 
         public bool existsPossibleMoves() {
             bool[,] mat = possibleMoves();

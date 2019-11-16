@@ -23,12 +23,15 @@ namespace chess_console {
         }
 
         public static void printMatch(ChessMatch match ) {
-            printBoard( match.board );
+            printBoard( match.Board );
             Console.WriteLine();
             printCapturedPieces( match );
             Console.WriteLine();
-            Console.WriteLine( "Shift: " + match.shift);
-            Console.WriteLine( "Waiting player " + match.currentPlayer );
+            Console.WriteLine( "Shift: " + match.Shift);
+            Console.WriteLine( "Waiting player " + match.CurrentPlayer );
+            if ( match.InCheck ) {
+                Console.WriteLine( "Check!" );
+            }
         }
 
         public static void printHashSet(HashSet<Piece> hash ) {

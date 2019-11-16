@@ -11,7 +11,7 @@ namespace chess_console {
             try {
                 ChessMatch game = new ChessMatch ();
 
-                while (!game.finished) {
+                while (!game.Finished) {
 
                     try {
                         Console.Clear();
@@ -22,10 +22,10 @@ namespace chess_console {
                         Position origin = Screen.catchChessPosition().toPosition();
 
                         game.checkOriginPosition( origin );
-                        bool[,] possiblePositions = game.board.piece( origin ).possibleMoves();
+                        bool[,] possiblePositions = game.Board.piece( origin ).possibleMoves();
 
                         Console.Clear();
-                        Screen.printBoard( game.board , possiblePositions );
+                        Screen.printBoard( game.Board , possiblePositions );
 
                         Console.WriteLine();
                         Console.Write( "Destiny: " );
