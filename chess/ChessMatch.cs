@@ -35,6 +35,12 @@ namespace chess {
             }
         }
 
+        public void checkDestinyPosition(Position origin, Position destiny ) {
+            if ( !board.piece( origin ).isPossibleMoveTo( destiny ) ) {
+                throw new BoardException( "Invalid destiny position" );
+            }
+        }
+
         public void executeMovement (Position origin, Position destiny) {
             Piece p = board.removePiece (origin);
             p.incrementMovementsCount ();

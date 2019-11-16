@@ -27,6 +27,10 @@ namespace board {
             return false;
         }
 
+        public bool isPossibleMoveTo(Position pos ) {
+            return possibleMoves()[ pos.line , pos.column ];
+        }
+
         public abstract bool[, ] possibleMoves ();
 
     }

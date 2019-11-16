@@ -33,6 +33,7 @@ namespace chess_console {
                         Console.WriteLine();
                         Console.Write( "Destiny: " );
                         Position destiny = Screen.catchChessPosition().toPosition();
+                        game.checkDestinyPosition( origin , destiny );
 
                         game.executePlay( origin , destiny );
                     }catch(BoardException e ) {
