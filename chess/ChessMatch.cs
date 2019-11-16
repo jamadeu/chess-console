@@ -89,6 +89,10 @@ namespace chess {
             } else {
                 InCheck = false;
             }
+
+            if ( isCheckMate( opponent( CurrentPlayer ) ) ) {
+                Finished = true;
+            }
             Shift++;
             changePlayer ();
 
@@ -122,6 +126,31 @@ namespace chess {
 
             aux.ExceptWith( piecesCaptured( color ) );
             return aux;
+        }
+
+        public bool isCheckMate(Color color ) {
+            if ( !isInCheck( color ) ) {
+                return false;
+            }
+
+            foreach(Piece p in piecesInGame( color ) ) {
+                bool[,] mat = p.possibleMoves();
+                for ( int i = 0; i< Board.lines; i++ ) {
+                    for ( int j = 0; j< Board.columns; i++ ) {
+                        if ( mat[ i , j ] ) {
+                            Position origin = p.position;
+                            Position destiny = new Position( i , j );
+                            Piece pieceCaptured = executeMovement( origin, destiny );
+                            bool testCheck = isInCheck( color );
+                            undoMovement( origin , destiny , pieceCaptured );
+                            if ( !testCheck ) {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+            return true;
         }
 
         private Color opponent(Color color ) {
