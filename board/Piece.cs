@@ -15,6 +15,18 @@ namespace board {
             movementsCount++;
         }
 
+        public bool existsPossibleMoves() {
+            bool[,] mat = possibleMoves();
+            for (int i  = 0; i<board.lines;i++ ) {
+                for(int j = 0; j< board.columns;i++ ) {
+                    if ( mat[ i , j ] ) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
         public abstract bool[, ] possibleMoves ();
 
     }

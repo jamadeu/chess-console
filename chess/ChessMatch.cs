@@ -21,6 +21,20 @@ namespace chess {
             board.putPiece (new Rook (board, Color.Black), new ChessPosition ('a', 8).toPosition ());
         }
 
+        public void checkOriginPosition(Position pos ) {
+            if(board.piece(pos) == null ) {
+                throw new BoardException( "There is no piece in the chosen origin position" );
+            }
+
+            if(currentPlayer != board.piece( pos ).color ) {
+                throw new BoardException( "The piece chosen is not yours" );
+            }
+
+            if ( !board.piece( pos ).existsPossibleMoves() ) {
+                throw new BoardException( "There are no possible moves for the chosen piece" );
+            }
+        }
+
         public void executeMovement (Position origin, Position destiny) {
             Piece p = board.removePiece (origin);
             p.incrementMovementsCount ();

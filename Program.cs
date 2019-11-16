@@ -12,26 +12,33 @@ namespace chess_console {
                 ChessMatch game = new ChessMatch ();
 
                 while (!game.finished) {
-                    Console.Clear ();
-                    Screen.printBoard (game.board);
-                    Console.WriteLine ();
-                    Console.WriteLine ("Shift: " + game.shift);
-                    Console.WriteLine ("Waiting player " + game.currentPlayer);
 
-                    Console.WriteLine ();
-                    Console.Write ("Origin: ");
-                    Position origin = Screen.catchChessPosition ().toPosition ();
+                    try {
+                        Console.Clear();
+                        Screen.printBoard( game.board );
+                        Console.WriteLine();
+                        Console.WriteLine( "Shift: " + game.shift );
+                        Console.WriteLine( "Waiting player " + game.currentPlayer );
 
-                    bool[, ] possiblePositions = game.board.piece (origin).possibleMoves ();
+                        Console.WriteLine();
+                        Console.Write( "Origin: " );
+                        Position origin = Screen.catchChessPosition().toPosition();
 
-                    Console.Clear ();
-                    Screen.printBoard (game.board, possiblePositions);
+                        game.checkOriginPosition( origin );
+                        bool[,] possiblePositions = game.board.piece( origin ).possibleMoves();
 
-                    Console.WriteLine ();
-                    Console.Write ("Destiny: ");
-                    Position destiny = Screen.catchChessPosition ().toPosition ();
+                        Console.Clear();
+                        Screen.printBoard( game.board , possiblePositions );
 
-                    game.executePlay (origin, destiny);
+                        Console.WriteLine();
+                        Console.Write( "Destiny: " );
+                        Position destiny = Screen.catchChessPosition().toPosition();
+
+                        game.executePlay( origin , destiny );
+                    }catch(BoardException e ) {
+                        Console.WriteLine( e.Message );
+                        Console.ReadLine();
+                    }
                 }
 
             } catch (BoardException e) {
