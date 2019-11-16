@@ -1,4 +1,5 @@
 using board;
+using System.Collections.Generic;
 
 namespace chess {
     class ChessMatch {
@@ -6,19 +7,27 @@ namespace chess {
         public int shift { get; private set; }
         public Color currentPlayer { get; private set; }
         public bool finished { get; private set; }
+        private HashSet<Piece> pieces;
+        private HashSet<Piece> caught;
 
         public ChessMatch () {
             board = new Board (8, 8);
             shift = 1;
             currentPlayer = Color.White;
             finished = false;
+            pieces = new HashSet<Piece>();
+            caught = new HashSet<Piece>();
             putPieces ();
         }
 
+        public void putNewPiece(char coluna, int linha, Piece piece ) {
+            board.putPiece( piece , new ChessPosition( coluna , linha ).toPosition() );
+            pieces.Add( piece );
+        }
         private void putPieces () {
-            board.putPiece (new Rook (board, Color.White), new ChessPosition ('a', 1).toPosition ());
 
-            board.putPiece (new Rook (board, Color.Black), new ChessPosition ('a', 8).toPosition ());
+            putNewPiece( 'a' , 1 , new Rook( board , Color.White ));
+            putNewPiece( 'a' , 8 , new Rook( board , Color.Black ));
         }
 
         public void checkOriginPosition(Position pos ) {
@@ -46,6 +55,9 @@ namespace chess {
             p.incrementMovementsCount ();
             Piece pieceCaptured = board.removePiece (destiny);
             board.putPiece (p, destiny);
+            if( pieceCaptured != null ) {
+                caught.Add( pieceCaptured );
+            }
         }
 
         public void executePlay (Position origin, Position destiny) {
@@ -61,6 +73,28 @@ namespace chess {
             } else {
                 currentPlayer = Color.White;
             }
+        }
+
+        public HashSet<Piece> piecesCaptured(Color color ) {
+            HashSet<Piece> aux = new HashSet<Piece>();
+            foreach(Piece p in caught ) {
+                if(p.color == color ) {
+                    aux.Add( p );
+                }
+            }
+            return aux;
+        }
+
+        public HashSet<Piece> piecesInGame( Color color ) {
+            HashSet<Piece> aux = new HashSet<Piece>();
+            foreach ( Piece p in caught ) {
+                if ( p.color == color ) {
+                    aux.Add( p );
+                }
+            }
+
+            aux.ExceptWith( piecesCaptured( color ) );
+            return aux;
         }
     }
 }

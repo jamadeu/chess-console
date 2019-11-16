@@ -15,10 +15,7 @@ namespace chess_console {
 
                     try {
                         Console.Clear();
-                        Screen.printBoard( game.board );
-                        Console.WriteLine();
-                        Console.WriteLine( "Shift: " + game.shift );
-                        Console.WriteLine( "Waiting player " + game.currentPlayer );
+                        Screen.printMatch( game );
 
                         Console.WriteLine();
                         Console.Write( "Origin: " );
